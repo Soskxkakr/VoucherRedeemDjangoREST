@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            background-color: blanchedalmond;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            {{ voucher.as_p }}
+            {% if messages %}
+            {% for message in messages %}
+                <p style="color:green"> {{ message }} </p>
+            {% endfor %}
+            {% endif %}
+            <button type="submit">Redeem</button>
+        </form>
+    </div>
+</body>
+</html>
