@@ -29,6 +29,7 @@ def voucher_view(request):
 def get_vouchers(request):
     vouchers = Voucher.objects.all()
     serializer = VoucherSerializer(vouchers, many=True)
+    print("LMAOOOOOOOOO ", serializer.data)
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -71,11 +72,11 @@ def check_voucher(request, entered_code):
     if voucher != None:
         if voucher.get('no_of_use') != 0:
             decrement_use(request, voucher)
-            return messages.success(request, voucher.get('discount'))
+            return messages.success(request, str(voucher.get('discount')) + "% OFF")
         else:
             return messages.error(request, "This code has been fully redeemed")
     else:
-        return messages.error(request, "This code is either used or invalid")
+        return messages.error(request, "Invalid Code")
 
 def loop_vouchers(request, entered_code):
     obj = Voucher.objects.all().values()
