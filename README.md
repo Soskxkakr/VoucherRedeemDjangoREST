@@ -21,9 +21,12 @@
 > python3 api/manage.py createsuperuser
 
 Provide the details for the username, email, and password.
+
 In this project its:
-Username: *admin*
-Password: *admin*
+
+Username: **admin**
+
+Password: **admin**
 
 ## URLS
 > 'https://localhost:8000/' -> Redeem Voucher Page
