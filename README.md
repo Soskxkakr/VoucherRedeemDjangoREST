@@ -37,3 +37,8 @@
     "no of use" : \<number of use\>
 }
 ```
+
+## Guides
+1. Check Voucher's availability and code from /localhost/get-vouchers
+2. If voucher's "number of use" is 0, edit it through the /localhost/update-voucher/ or /localhost/site-admin/ page
+3. Redeem the voucher again through /localhost/voucher/
