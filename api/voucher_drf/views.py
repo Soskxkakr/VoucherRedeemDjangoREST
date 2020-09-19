@@ -9,10 +9,6 @@ from .models import Voucher
 from .serializers import VoucherSerializer
 
 # Create your views here.
-
-def sample(request):
-    return HttpResponse("Hello World!")
-
 def voucher_view(request):
     obj = Voucher.objects.all().values()
 

@@ -12,9 +12,7 @@
 > (export PYTHONPATH='$HOME/\<project-dir\>' && python3 api/manage.py runserver)
 
 ## URLS
-> 'localhost/' -> Hello World page (Landing page)
-
-> 'localhost/voucher/' -> Redeem Voucher Page
+> 'localhost/' -> Redeem Voucher Page
 
 > 'localhost/get-vouchers/' -> GET all vouchers
 
@@ -31,10 +29,9 @@
 ## Voucher Model / Object
 ```
 {
-    "id" : \<id\>,
-    "voucher_code" : \<code maxlength=5\>,
-    "discount" : \<discount value\>,
-    "no of use" : \<number of use\>
+    "voucher_code" : <code>,
+    "discount" : <discount value>,
+    "no_of_use" : <number of use>
 }
 ```
 
