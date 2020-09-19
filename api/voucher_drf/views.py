@@ -50,6 +50,8 @@ def add_voucher(request):
 def update_voucher(request, id):
     voucher = Voucher.objects.get(id=id)
     serializer = VoucherSerializer(instance=voucher, data=request.data)
+    print("INSTANCE: ",voucher)
+    print("DATA: ", request.data)
 
     if serializer.is_valid():
         serializer.save()
@@ -64,26 +66,29 @@ def delete_voucher(request, id):
 
 # Functions
 def check_voucher(request, entered_code):
+    voucher = loop_vouchers(request, entered_code)
+
+    if voucher != None:
+        if voucher.get('no_of_use') != 0:
+            decrement_use(request, voucher)
+            return messages.success(request, voucher.get('discount'))
+        else:
+            return messages.error(request, "This code has been fully redeemed")
+    else:
+        return messages.error(request, "This code is either used or invalid")
+
+def loop_vouchers(request, entered_code):
     obj = Voucher.objects.all().values()
 
     for voucher in obj:
         if str(entered_code) == str(voucher.get('voucher_code')):
-            decrement_use(request, voucher)
-            return messages.success(request, voucher.get('discount'))
-        else:
-            return messages.error(request, "This code is either used or invalid")
+            return voucher
+
+    return None
 
 def decrement_use(request, voucher):
-    print(voucher['no_of_use'])
     voucher['no_of_use'] = int(voucher['no_of_use']) - 1
-    print(voucher)
 
-    serializer = VoucherSerializer(instance=voucher.get('voucher_code'), data=voucher)
+    serializer = VoucherSerializer(instance=Voucher.objects.get(id=voucher.get('id')), data=voucher)
     if serializer.is_valid():
         serializer.save()
-        print("It is valid!")
-    # demo_voucher = {
-    #     'voucher_code' : voucher,
-    #     'discount' : 
-    # }
-    # serializer = VoucherSerializer(instance=voucher, data=)
