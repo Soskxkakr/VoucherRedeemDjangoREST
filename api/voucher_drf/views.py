@@ -9,6 +9,7 @@ from .models import Voucher
 from .serializers import VoucherSerializer
 
 # Create your views here.
+# Redeem Voucher View
 def voucher_view(request):
     obj = Voucher.objects.all().values()
 
@@ -21,6 +22,7 @@ def voucher_view(request):
     form = VoucherForm()
     return render(request, 'templates/voucher.html', {'voucher' : form})
 
+# GET ALL Vouchers json
 @api_view(['GET'])
 def get_vouchers(request):
     vouchers = Voucher.objects.all()
@@ -28,12 +30,14 @@ def get_vouchers(request):
     print("LMAOOOOOOOOO ", serializer.data)
     return Response(serializer.data)
 
+# GET Voucher json based on its id
 @api_view(['GET'])
 def get_voucher(request, id):
     vouchers = Voucher.objects.get(id=id)
     serializer = VoucherSerializer(vouchers)
     return Response(serializer.data)
 
+# POST a new voucher object
 @api_view(['POST'])
 def add_voucher(request):
     serializer = VoucherSerializer(data=request.data)
@@ -43,6 +47,7 @@ def add_voucher(request):
 
     return Response(serializer.data)
 
+# UPDATE an existing voucher object by id
 @api_view(['POST'])
 def update_voucher(request, id):
     voucher = Voucher.objects.get(id=id)
@@ -55,13 +60,16 @@ def update_voucher(request, id):
 
     return Response(serializer.data)
 
+# DELETE a voucher (Method not allowed)
 @api_view(['DELETE'])
 def delete_voucher(request, id):
     voucher = Voucher.objects.get(id=id)
     # voucher.delete()
     return Response("Method Not Allowed")
 
+
 # Functions
+# Check if the code entered matches any voucher in database or not
 def check_voucher(request, entered_code):
     voucher = loop_vouchers(request, entered_code)
 
@@ -74,6 +82,7 @@ def check_voucher(request, entered_code):
     else:
         return messages.error(request, "Invalid Code")
 
+# Looping the voucher database
 def loop_vouchers(request, entered_code):
     obj = Voucher.objects.all().values()
 
@@ -83,6 +92,7 @@ def loop_vouchers(request, entered_code):
 
     return None
 
+# Decrease the number of use after a correct voucher has been entered
 def decrement_use(request, voucher):
     voucher['no_of_use'] = int(voucher['no_of_use']) - 1
 
