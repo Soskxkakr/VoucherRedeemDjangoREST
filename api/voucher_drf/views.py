@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.contrib import messages
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -27,7 +26,6 @@ def voucher_view(request):
 def get_vouchers(request):
     vouchers = Voucher.objects.all()
     serializer = VoucherSerializer(vouchers, many=True)
-    print("LMAOOOOOOOOO ", serializer.data)
     return Response(serializer.data)
 
 # GET Voucher json based on its id
@@ -37,11 +35,10 @@ def get_voucher(request, id):
     serializer = VoucherSerializer(vouchers)
     return Response(serializer.data)
 
-# POST a new voucher object
-@api_view(['POST'])
+# PUT a new voucher object
+@api_view(['PUT'])
 def add_voucher(request):
     serializer = VoucherSerializer(data=request.data)
-
     if serializer.is_valid():
         serializer.save()
 
@@ -52,8 +49,6 @@ def add_voucher(request):
 def update_voucher(request, id):
     voucher = Voucher.objects.get(id=id)
     serializer = VoucherSerializer(instance=voucher, data=request.data)
-    print("INSTANCE: ",voucher)
-    print("DATA: ", request.data)
 
     if serializer.is_valid():
         serializer.save()
@@ -65,8 +60,7 @@ def update_voucher(request, id):
 def delete_voucher(request, id):
     voucher = Voucher.objects.get(id=id)
     # voucher.delete()
-    return Response("Method Not Allowed")
-
+    return Response(status=405)
 
 # Functions
 # Check if the code entered matches any voucher in database or not

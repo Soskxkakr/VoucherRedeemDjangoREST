@@ -14,3 +14,24 @@ class Voucher(models.Model):
 
     def __str__(self):
         return self.voucher_code
+
+    def saveDb(self):
+        pass
+
+    def setVoucherCode(self, voucher_code):
+        self.voucher_code = voucher_code
+
+    def setDiscount(self, discount):
+        self.discount = discount
+
+    def setNoOfUse(self, no_of_use):
+        self.no_of_use = no_of_use
+
+    def getVoucherCode(self):
+        return self.voucher_code
+
+    def getDiscount(self):
+        return self.discount
+
+    def getNoOfUse(self):
+        return self.no_of_use
