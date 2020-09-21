@@ -11,11 +11,9 @@
 ### Set PYTHONPATH, make migrations and run the server
 > cd $HOME/\<project-dir\>
 
-> python3 api/manage.py makemigrations
-
-> python3 api/manage.py migrate
-
 > (export PYTHONPATH='$HOME/\<project-dir\>' && python3 api/manage.py runserver)
+
+**Note the parenthesis to prevent overwriting the actual path**
 
 ### To have Admin Credentials
 > python3 api/manage.py createsuperuser
@@ -54,5 +52,17 @@ Password: **admin**
 
 ## Guides
 1. Check Voucher's availability and code from https://localhost:8000/get-vouchers
-2. If voucher's "number of use" is 0, edit it through the https://localhost:8000/update-voucher/ or /localhost/site-admin/ page
+2. If voucher's "number of use" is 0, edit it through the https://localhost:8000/update-voucher/\<id\> or /localhost/site-admin/ page
 3. Redeem the voucher again through https://localhost:8000/
+
+## Testing
+Testing is available in api/voucher_drf/tests.py
+
+Change directory (for convenience)
+> cd $HOME/\<project-dir\>
+
+Run the tests
+> api/manage.py test voucher_drf.tests.VoucherTestCase
+
+## Notes
+**The ID (primary key) of voucher code that are available is 5,6,7 and 8**
